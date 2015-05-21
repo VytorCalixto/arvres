@@ -349,7 +349,7 @@ Ap234 inserer234 (Ap234 p, Ap234 pai_p, char *c , int linha){ // abordagem otimi
                                     p->Ap[0] = inserer234(p->Ap[1], p, c, linha);
                             }
                         }
-                        else //c eh o maior do mundo bwaha
+                        else { //c eh o maior do mundo bwaha
                             if(eh_folha == 0) //este if nunca deve acontecer
                                 p->Ap[3] = inserer234(p->Ap[3], p, c, linha);
                             else{
