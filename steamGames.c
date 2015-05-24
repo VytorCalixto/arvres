@@ -1,16 +1,9 @@
 #include <stdio.h>
-#include <string.h>
 #include <stdlib.h>
+#include <string.h>
+#include "steamGames.h"
 
-typedef struct nodo *Ap234;
-
-typedef struct nodo {
-	char nome[3][15];
-	Ap234 Ap[4];
-	int qtdNome;
-	int linhaRegistro234[3];
-} tipo234;
-
+// ------------ 2-3-4 ---------------- //
 int eh_nodofolha234 (Ap234 p){ //retorna 1 se eh nodo folha
     if ((p->Ap[0]==NULL) && (p->Ap[1]==NULL) && (p->Ap[2]==NULL) && (p->Ap[3]==NULL)) return 1;
     return(0);
@@ -370,3 +363,5 @@ Ap234 insere234 (Ap234 raiz, char *c , int linha){ // abordagem pessimista
     raiz = inserer234 (raiz, raiz, c, linha);
     return(raiz);
 }
+
+// ------------ AVL ---------------- //
