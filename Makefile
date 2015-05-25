@@ -1,4 +1,4 @@
-CFLAGS= -Wall -O2
+CFLAGS= -Wall -O2 -g
 
 all: main.o steamGames.o
 	gcc main.o steamGames.o -o steamGames
