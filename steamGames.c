@@ -1,7 +1,7 @@
-#include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
 #include "steamGames.h"
+#define FALSE (0==1)
+#define TRUE  !(FALSE)
 
 // ------------ 2-3-4 ---------------- //
 int eh_nodofolha234 (Ap234 p){ //retorna 1 se eh nodo folha
@@ -365,3 +365,134 @@ Ap234 insere234 (Ap234 raiz, char *c , int linha){ // abordagem pessimista
 }
 
 // ------------ AVL ---------------- //
+ApAVL rotEsq (ApAVL p){
+	//Rotação Esquerda 
+	ApAVL d = NULL;
+	d = p->esq;
+	p->esq = d->dir;
+	d->dir = p;
+	return d;
+}
+
+ApAVL rotDir (ApAVL p){
+	//Rotação Direita
+	ApAVL e = NULL;
+	e = p->dir;
+	p->dir = e->esq;
+	e->esq = p;
+	return e;
+}
+
+ApAVL criaNodoAVL(int k, int linha){
+	//Cria um nodo Vazio
+	ApAVL n = malloc(sizeof(*n));
+	n->codigo = k;
+	n->bal = 0;
+	n->esq = NULL;
+	n->dir = NULL;
+	n->linhaRegistroAVL = linha;
+	return n;
+}
+
+ApAVL balanceiaAVL(ApAVL p){
+	if (p == NULL)
+		return NULL;
+	if (p->bal == 2) //Se tem mais do lado esquerdo
+		if (p->esq->bal == 1){ //Tipo esq->esq
+			p = rotEsq(p); //Uma rotação basta
+			p->bal = 0;
+			p->dir->bal = 0;
+			return p;
+		}
+		else { //Se p->esq->bal == -1, ou seja, esq->dir
+			p->esq = rotDir(p->esq);
+			p = rotEsq(p);
+			if (p->bal == 1) {
+				p->bal = 0;
+				p->esq->bal = 0;
+				p->dir->bal = -1;
+			}
+			else {
+				p->bal = 0;
+				p->esq->bal = 1;
+				p->dir->bal = 0;
+			}
+			return p;
+		}
+	else { //Se está aqui, tem nodos a mais do lado direito
+		if (p->dir->bal == -1){ //Tipo dir-dir
+			p = rotDir(p);
+			return p;
+		}
+		else { //Se p->dir>bal == 1, ou seja, dir->esq
+			p->dir = rotEsq(p->dir);
+			p = rotDir(p);
+			if (p->bal == 1) {
+				p->bal = 0;
+				p->esq->bal = 0;
+				p->dir->bal = -1;
+			}
+			else {
+				p->bal = 0;
+				p->esq->bal = -1;
+				p->dir->bal = 0;
+			}
+			return p;
+		}
+	}
+	return p; //Nunca vai chegar aqui
+}
+
+ApAVL insereAVL(ApAVL p, int k, int *mudaA, int linha){
+	ApAVL n;
+	if (p == NULL){ //Chegou na folha
+		n = criaNodoAVL(k, linha);
+		*mudaA = TRUE; //Alterou o balanceamento
+		return n;
+	}
+	if (p->codigo == k) { //Não pode inserir o que já existe
+		*mudaA = FALSE;
+		return p;
+	}
+	if (k < p->codigo){ //Vai pro lado esquerdo
+		p->esq = insereAVL(p->esq, k, mudaA, linha);
+		if (*mudaA){
+			p->bal++;
+			if (p->bal == 2)
+				p = balanceiaAVL(p);
+			if (p-> bal == 0)
+				*mudaA = FALSE;
+		}
+	}
+	else { //Lado Direito
+		p->dir = insereAVL(p->dir, k, mudaA, linha);
+		if (*mudaA){
+			p->bal--;
+			if(p->bal == -2)
+				p = balanceiaAVL(p);
+			if(p->bal == 0)
+				*mudaA = FALSE;
+		}
+	}
+	return p;
+}
+
+ApAVL buscaAVL(ApAVL p, int k){
+	//Busca Binária
+	if (p == NULL) return NULL;
+	if (p->codigo == k) return p;
+	if (k < p->codigo) //Se for menor, vai pra esquerda
+		return buscaAVL(p->esq,k);
+	else //Senão, direita
+		return buscaAVL(p->dir,k);
+}
+
+void imprimeAVL(ApAVL p){
+	//Tipo pré-ordem
+	if (p != NULL) {
+		printf(" (%d",p->codigo);
+		imprimeAVL(p->esq);
+		imprimeAVL(p->dir);
+		printf(")");
+	}
+}	
