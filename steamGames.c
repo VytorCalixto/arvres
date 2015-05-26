@@ -456,7 +456,7 @@ ApAVL insereAVL(ApAVL p, int k, int *mudaA, int linha){
 	}
 	if (k < p->codigo){ //Vai pro lado esquerdo
 		p->esq = insereAVL(p->esq, k, mudaA, linha);
-		if (*mudaA){
+		if (*mudaA && !(p->dir)){
 			p->bal++;
 			if (p->bal == 2)
 				p = balanceiaAVL(p);
@@ -466,7 +466,7 @@ ApAVL insereAVL(ApAVL p, int k, int *mudaA, int linha){
 	}
 	else { //Lado Direito
 		p->dir = insereAVL(p->dir, k, mudaA, linha);
-		if (*mudaA){
+		if (*mudaA && !(p->esq)){
 			p->bal--;
 			if(p->bal == -2)
 				p = balanceiaAVL(p);
