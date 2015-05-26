@@ -8,33 +8,36 @@ int eh_nodofolha234 (Ap234 p){ //retorna 1 se eh nodo folha
     if ((p->Ap[0]==NULL) && (p->Ap[1]==NULL) && (p->Ap[2]==NULL) && (p->Ap[3]==NULL)) return 1;
     return(0);
 }
-void	imprime234	(Ap234 p){ //imprime a arvore
+void imprime234 (Ap234 p){ //imprime a arvore
 
     if (p == NULL){
         return;
     }
     else if (p -> qtdNome == 1){
+        printf( "(%s", p->nome[0]);
         imprime234(p->Ap[0]);
-        printf( "( %s )", p->nome[0]);
         imprime234(p->Ap[1]);
+        printf(")");
         return;
     }
     else if(p -> qtdNome == 2){
+        printf("(%s; ", p->nome[0]);
+        printf(" %s", p->nome[1]);
         imprime234(p->Ap[0]);
-        printf("( %s; ", p->nome[0]);
         imprime234(p->Ap[1]);
-        printf(" %s )", p->nome[1]);
         imprime234(p->Ap[2]);
+        printf(")");
         return;
     }
     else if(p-> qtdNome == 3){
-        imprime234(p->Ap[0]);
-        printf("( %s;", p->nome[0]);
-        imprime234(p->Ap[1]);
+        printf("(%s;", p->nome[0]);
         printf("%s;", p->nome[1]);
+        printf("%s", p->nome[2]);
+        imprime234(p->Ap[0]);
+        imprime234(p->Ap[1]);
         imprime234(p->Ap[2]);
-        printf("%s )", p->nome[2]);
         imprime234(p->Ap[3]);
+        printf(")");
         return;
     }
     return;
