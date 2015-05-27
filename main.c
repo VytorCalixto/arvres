@@ -3,6 +3,8 @@
 #include "steamGames.h"
 #include <unistd.h>
 
+void imprimeLinha(char *arquivo, int linha);
+
 int main (int argc, char **argv) {
     // Lê os parâmetros de entrada
     // Hard coded de acordo com a especificação: 1-registros, 2-busca
@@ -34,6 +36,7 @@ int main (int argc, char **argv) {
     }
     fclose(dados);
     
+    
     puts("\nCodigo:");
     imprimeAVL(raizAVL);
     puts("\nNome:");
@@ -49,15 +52,13 @@ int main (int argc, char **argv) {
     while(tipo != 'f'){
         if(tipo == 'c'){
             fscanf(arqBuscas,"%d", &codigo);
-            printf("%d\n", codigo);
             ApAVL no = buscaAVL(raizAVL, codigo);
             if(no != NULL){
-                puts("Achou");
-                // TODO: Recuperar linha do arquivo
+                imprimeLinha(registros, no->linhaRegistroAVL);
             }
         }else if(tipo == 'n'){
             fscanf(arqBuscas,"%s", &jogo);
-            printf("%s\n", &jogo);
+            busca234(raiz234, &jogo);
             // TODO: Buscar e recuperar linha do arquivo.
         }
         fscanf(arqBuscas, "%c", &tipo);
@@ -67,4 +68,19 @@ int main (int argc, char **argv) {
     
 
     exit(0);
+}
+
+void imprimeLinha(char *arquivo, int n){
+    FILE *arq = fopen(arquivo, "r");
+    if(arq == NULL){
+        return;
+    }
+    int cont = 0;
+    --n;
+    char linha[256];
+    while (fgets(linha, sizeof linha, arq) != NULL && cont < n){
+        cont++;
+    }
+    printf("%s", linha);
+    fclose(arq);
 }
