@@ -50,12 +50,10 @@ Ap234 criaNodo234 (char *c, int linha){ //cria um novo nodo alocando espaço de 
 	x-> qtdNome = 1;
 	while (*c != 0){
 		x-> nome[0][i] = *c;
-		printf("%c", *c);
 		c++;
 		i++;
 	}
 	x-> nome[0][i] = '\0';
-	printf("\na string copiada foi %s\nfim do cria nodo ---------- \n", x->nome[0]);
 	x->linhaRegistro234[0]=linha;
 	c = c - i; // retornando o pointer para o começo da string.
     x->Ap[0] = NULL; x->Ap[1] = NULL; x->Ap[2] = NULL; x->Ap[3]= NULL;
@@ -73,8 +71,6 @@ Ap234 split (Ap234 p, Ap234 pai_p){
         pai_p->Ap[0]=aux1;
         pai_p->Ap[1]=aux2;
         strcpy(pai_p->nome[0], pai_p->nome[1]);
-        printf("aux1 contem o elemento %s, e aux2 contem o elemento %s \n", aux1->nome[0], aux2->nome[0]);
-        printf("pai_p contem o elemento %s", pai_p->nome[0]);
         return(pai_p);
     }
     //caso nao seja raiz folha
@@ -86,16 +82,13 @@ Ap234 split (Ap234 p, Ap234 pai_p){
     aux2->Ap[0] = p->Ap[2];
     aux2->Ap[1] = p->Ap[3];
 
-    printf("aux1 contem o elemento %s, e aux2 contem o elemento %s \n", aux1->nome[0], aux2->nome[0]);
 
     aux3 = criaNodo234(p->nome[1], p->linhaRegistro234[1]);
     aux3->Ap[0] = aux1;
     aux3->Ap[1] = aux2;
-    printf("aux3 contem o elemento %s \n", aux3->nome[0]);
 
     if (pai_p->qtdNome == 2){
         if (p == pai_p->Ap[0]){ // significa que nome[0] > c, c deve ser colocado à esquerda
-            printf("c < pai_p->nome[0], pai_p->nome[0] inicial eh %s \n", pai_p->nome[0]);
             strcpy(pai_p->nome[2], pai_p->nome[1]);
             pai_p->linhaRegistro234[2] = pai_p->linhaRegistro234[1];
             strcpy(pai_p->nome[1], pai_p->nome[0]);
@@ -107,10 +100,8 @@ Ap234 split (Ap234 p, Ap234 pai_p){
             pai_p->Ap[1]=aux2;
             pai_p->Ap[0]=aux1;
             pai_p->qtdNome ++;
-            printf("p->nome[0] final eh %s\n", p->nome[0]);
         }
         else if (p == pai_p->Ap[1]){
-            printf("\n nome[0] <= c <= nome[1], p->nome[1] inicial foi %s \n", pai_p->nome[1]);
             strcpy(pai_p->nome[2], pai_p->nome[1]);
             pai_p->linhaRegistro234[2] = pai_p->linhaRegistro234[1];
             strcpy(pai_p->nome[1], aux3->nome[0]);
@@ -119,21 +110,17 @@ Ap234 split (Ap234 p, Ap234 pai_p){
             pai_p->Ap[2]=aux2;
             pai_p->Ap[1]=aux1; // e ap[0] continua o mesmo.
             pai_p->qtdNome++;
-            printf("o p->nome[1] atual eh %s\n", pai_p->nome[1]);
         }
         else if (p==pai_p->Ap[2]){
-            printf("\n c >= p-<nome[1], p->nome[2] inicial foi %s \n", p->nome[2]);
             strcpy(pai_p->nome[2], aux3->nome[0]);
             pai_p->linhaRegistro234[2]= aux3->linhaRegistro234[0];
             pai_p->Ap[2]= aux1;
             pai_p->Ap[3]= aux2;
             pai_p->qtdNome ++;
-            printf("o p->nome[2] atual eh %s\n", p->nome[2]);
         }
     }
     else if (pai_p->qtdNome == 1){ // tipo 2
         if(p == pai_p->Ap[0]){
-            printf("pai_p->nome[0] > *c , pai_p->nome[0] inicial foi %s \n", pai_p->nome[0]);
             strcpy(pai_p->nome[1], pai_p->nome[0]);
             pai_p->linhaRegistro234[1] = pai_p->linhaRegistro234[0];
             pai_p->linhaRegistro234[0]= aux3->linhaRegistro234[0];
@@ -141,13 +128,10 @@ Ap234 split (Ap234 p, Ap234 pai_p){
             pai_p->Ap[2]=pai_p->Ap[1];
             pai_p->Ap[0]=aux1;
             pai_p->Ap[1]=aux2;
-            printf("pai_p->nome[0] final foi %s \n", pai_p->nome[0]);
             pai_p->qtdNome ++;
         }
         else if(p == pai_p->Ap[1]){
-            printf("pai_p->nome[0] <= *c , pai_p->nome[1] inicial foi %s \n", pai_p->nome[1]);
             strcpy (pai_p->nome[1], aux3->nome[0]);
-            printf("pai_p->nome[1] final foi %s \n", pai_p->nome[1]);
             pai_p->linhaRegistro234[1]=aux3->linhaRegistro234[0];
             pai_p->Ap[1]=aux1;
             pai_p->Ap[2]=aux2;
@@ -157,7 +141,6 @@ Ap234 split (Ap234 p, Ap234 pai_p){
     else if (pai_p == NULL){
         return(aux3);
     }
-    printf("terminei o split!\n");
     return(pai_p);
 }
 
@@ -166,15 +149,12 @@ Ap234 inserer234 (Ap234 p, Ap234 pai_p, char *c , int linha){ // abordagem otimi
 	int string_eh_maior;
 	int i,j,k,l,aux,eh_folha = 0;
     Ap234 a_inserir;
-    printf(" entrei no insere234\n");
 
 	if (p == NULL){ // se for um nodo nulo, cria um novo nodo e dá o novo nodo pro p
 		p = (criaNodo234(c, linha));
 		return (p);
     }
-
     else{
-        printf(" entrei no if do p!=null\n");
         eh_folha = eh_nodofolha234(p);
             //SE TIPO 2:
             if (p->qtdNome == 1){
@@ -185,9 +165,7 @@ Ap234 inserer234 (Ap234 p, Ap234 pai_p, char *c , int linha){ // abordagem otimi
 
                 if (string_eh_maior <= 0){ //significa que p->nome[0] <= *c alfabeticamente, e c vai à direita de p-> nome
                     if(eh_folha == 1){
-                        printf("p->nome[0] <= *c , p->nome[1] inicial foi %s \n", p->nome[1]);
                         strcpy (p->nome[1], c);
-                        printf("p->nome[1] final foi %s \n", p->nome[1]);
                         p->linhaRegistro234[1]=linha;
                         p->qtdNome ++;
                         return(p);
@@ -201,13 +179,11 @@ Ap234 inserer234 (Ap234 p, Ap234 pai_p, char *c , int linha){ // abordagem otimi
                 }
                 else { // significa que p->nome[0] > c, e c fica no lugar de p->nome[0]
                     if(eh_folha == 1){
-                        printf("p->nome[0] > *c , p->nome[0] inicial foi %s e p->nome[1] inicial foi %s \n", p->nome[0], p->nome[1]);
                         strcpy(p->nome[1], p->nome[0]);
                         p->linhaRegistro234[1] = p->linhaRegistro234[0];
                         //tanho faz os p->ap pq são todos apontadores pra null
                         p->linhaRegistro234[0]= linha;
                         strcpy(p->nome[0], c);
-                        printf("p->nome[0] final foi %s e p->nome[1] foi %s\n", p->nome[0], p->nome[1]);
                         p->qtdNome ++;
                         return(p);
                     }
@@ -237,7 +213,6 @@ Ap234 inserer234 (Ap234 p, Ap234 pai_p, char *c , int linha){ // abordagem otimi
                     p->Ap[0] = inserer234(p->Ap[0], p, c, linha);
                 }
                 else if(eh_folha == 1){
-                    printf("c < p->nome[0], p->nome[0] inicial eh %s \n", p->nome[0]);
                     strcpy(p->nome[2], p->nome[1]);
                     p->linhaRegistro234[2] = p->linhaRegistro234[1];
                     strcpy(p->nome[1], p->nome[0]);
@@ -245,7 +220,6 @@ Ap234 inserer234 (Ap234 p, Ap234 pai_p, char *c , int linha){ // abordagem otimi
                     strcpy(p->nome[0], c);
                     p->linhaRegistro234[0] = linha;
                     p->qtdNome ++;
-                    printf("p->nome[0] final eh %s\n", p->nome[0]);
                     return(p);
                 }
 
@@ -258,11 +232,9 @@ Ap234 inserer234 (Ap234 p, Ap234 pai_p, char *c , int linha){ // abordagem otimi
 
                 if (string_eh_maior <= 0){ //significa que p->nome[1] <= c, ou seja, c deve ser colocado em nome[2]
                     if(eh_folha == 1){
-                        printf("\n c >= p-<nome[1], p->nome[2] inicial foi %s \n", p->nome[2]);
                         strcpy(p->nome[2], c);
                         p->linhaRegistro234[2]= linha;
                         p->qtdNome ++;
-                        printf("o p->nome[2] atual eh %s\n", p->nome[2]);
                         return(p);
                     }
                     else{
@@ -274,13 +246,11 @@ Ap234 inserer234 (Ap234 p, Ap234 pai_p, char *c , int linha){ // abordagem otimi
                 }
                 else{ // significa que nome[0] <= c < nome[1], c deve ser colocado em nome[1]
                     if(eh_folha == 1){
-                        printf("\n nome[0] <= c <= nome[1], p->nome[1] inicial foi %s \n", p->nome[1]);
                         strcpy(p->nome[2], p->nome[1]);
                         p->linhaRegistro234[2] = p->linhaRegistro234[1];
                         strcpy(p->nome[1], c);
                         p->linhaRegistro234[1] = linha;
                         p->qtdNome++;
-                        printf("o p->nome[1] atual eh %s\n", p->nome[1]);
                         return(p);
                     }
                     else{
@@ -327,7 +297,6 @@ Ap234 inserer234 (Ap234 p, Ap234 pai_p, char *c , int linha){ // abordagem otimi
                                 p->Ap[1] = inserer234(p->Ap[1], p, c, linha);
                             else
                                 p->Ap[0] = inserer234(p->Ap[0], p, c, linha);
-                            printf("cheguei aqui");
                         }
                     }
                     else { // significa que c >= p->nome[1]
@@ -345,7 +314,7 @@ Ap234 inserer234 (Ap234 p, Ap234 pai_p, char *c , int linha){ // abordagem otimi
                                     p->Ap[0] = inserer234(p->Ap[1], p, c, linha);
                             }
                         }
-                        else //c eh o maior do mundo bwaha
+                        else{ //c eh o maior do mundo bwaha
                             if(eh_folha == 0) //este if nunca deve acontecer
                                 p->Ap[3] = inserer234(p->Ap[3], p, c, linha);
                             else{
@@ -355,6 +324,7 @@ Ap234 inserer234 (Ap234 p, Ap234 pai_p, char *c , int linha){ // abordagem otimi
                                 else
                                     p->Ap[0] = inserer234(p->Ap[1], p, c, linha);
                             }
+                        }
                     }
                 }
             }
@@ -365,6 +335,18 @@ Ap234 inserer234 (Ap234 p, Ap234 pai_p, char *c , int linha){ // abordagem otimi
 Ap234 insere234 (Ap234 raiz, char *c , int linha){ // abordagem pessimista
     raiz = inserer234 (raiz, raiz, c, linha);
     return(raiz);
+}
+
+void busca234 (Ap234 p, char *c){
+    if(p == NULL) return;
+    int i = 0;
+    while(i < p->qtdNome && strcasecmp(p->nome[i], c) < 0) ++i;
+    if(i < p->qtdNome && strcasecmp(p->nome[i], c) == 0){
+        printf("%s\n", p->nome[i]);
+        // Se achou, precisa procurar a direita, ou seja, i + 1
+        busca234(p->Ap[i+1], c);
+    }
+    busca234(p->Ap[i],c);
 }
 
 // ------------ AVL ---------------- //
