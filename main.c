@@ -31,9 +31,6 @@ int main (int argc, char **argv) {
         raizAVL = insereAVL(raizAVL, codigo, &mudaA, linha);
         fscanf(dados, "%s", &jogo);
         raiz234 = insere234(raiz234, &jogo, linha);
-        printf("%d\t", linha);
-        imprime234(raiz234);
-        puts("");
         //printf("%s\n", &jogo);
         char descricao;
         fscanf(dados, "%[^\t\n]", &descricao);

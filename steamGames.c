@@ -14,15 +14,15 @@ void imprime234 (Ap234 p){ //imprime a arvore
         return;
     }
     else if (p -> qtdNome == 1){
-        printf( "(%s - %d", p->nome[0], p->linhaRegistro234[0]);
+        printf( "(%s", p->nome[0]);
         imprime234(p->Ap[0]);
         imprime234(p->Ap[1]);
         printf(")");
         return;
     }
     else if(p -> qtdNome == 2){
-        printf("(%s - %d; ", p->nome[0], p->linhaRegistro234[0]);
-        printf(" %s - %d", p->nome[1], p->linhaRegistro234[1]);
+        printf("(%s; ", p->nome[0]);
+        printf(" %s", p->nome[1]);
         imprime234(p->Ap[0]);
         imprime234(p->Ap[1]);
         imprime234(p->Ap[2]);
@@ -30,9 +30,9 @@ void imprime234 (Ap234 p){ //imprime a arvore
         return;
     }
     else if(p-> qtdNome == 3){
-        printf("(%s - %d;", p->nome[0], p->linhaRegistro234[0]);
-        printf("%s - %d;", p->nome[1], p->linhaRegistro234[1]);
-        printf("%s - %d", p->nome[2], p->linhaRegistro234[2]);
+        printf("(%s;", p->nome[0]);
+        printf("%s;", p->nome[1]);
+        printf("%s", p->nome[2]);
         imprime234(p->Ap[0]);
         imprime234(p->Ap[1]);
         imprime234(p->Ap[2]);
@@ -71,6 +71,7 @@ Ap234 split (Ap234 p, Ap234 pai_p){
         pai_p->Ap[0]=aux1;
         pai_p->Ap[1]=aux2;
         strcpy(pai_p->nome[0], pai_p->nome[1]);
+        pai_p->linhaRegistro234[0] = pai_p->linhaRegistro234[1];
         return(pai_p);
     }
     //caso nao seja raiz folha
@@ -342,7 +343,6 @@ void busca234 (Ap234 p, char *c, void (*f)(int)){
     int i = 0;
     while(i < p->qtdNome && strcasecmp(p->nome[i], c) < 0) ++i;
     if(i < p->qtdNome && strcasecmp(p->nome[i], c) == 0){
-        printf("%s %d\n", p->nome[i], p->linhaRegistro234[i]);
         (*f)(p->linhaRegistro234[i]);
         busca234(p->Ap[i+1], c, (*f));
     }
