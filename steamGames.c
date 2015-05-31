@@ -384,6 +384,7 @@ ApAVL balanceiaAVL(ApAVL p){
 		return NULL;
 	if (p->bal == 2) //Se tem mais do lado esquerdo
 		if (p->esq->bal == 1){ //Tipo esq->esq
+			p->bal = 0;
 			p = rotEsq(p); //Uma rotação basta
 			p->bal = 0;
 			p->dir->bal = 0;
@@ -406,7 +407,10 @@ ApAVL balanceiaAVL(ApAVL p){
 		}
 	else { //Se está aqui, tem nodos a mais do lado direito
 		if (p->dir->bal == -1){ //Tipo dir-dir
+			p->bal = 0;
 			p = rotDir(p);
+			p->bal = 0;
+			p->dir->bal = 0;
 			return p;
 		}
 		else { //Se p->dir>bal == 1, ou seja, dir->esq
@@ -441,7 +445,7 @@ ApAVL insereAVL(ApAVL p, int k, int *mudaA, int linha){
 	}
 	if (k < p->codigo){ //Vai pro lado esquerdo
 		p->esq = insereAVL(p->esq, k, mudaA, linha);
-		if (*mudaA && !(p->dir)){
+		if (*mudaA){
 			p->bal++;
 			if (p->bal == 2)
 				p = balanceiaAVL(p);
@@ -451,7 +455,7 @@ ApAVL insereAVL(ApAVL p, int k, int *mudaA, int linha){
 	}
 	else { //Lado Direito
 		p->dir = insereAVL(p->dir, k, mudaA, linha);
-		if (*mudaA && !(p->esq)){
+		if (*mudaA){
 			p->bal--;
 			if(p->bal == -2)
 				p = balanceiaAVL(p);
