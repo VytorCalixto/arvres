@@ -398,6 +398,10 @@ ApAVL balanceiaAVL(ApAVL p){
 				p->esq->bal = 0;
 				p->dir->bal = -1;
 			}
+			else if (p->bal == 0) {
+				p->esq->bal = 0;
+				p->dir->bal = 0;
+			}
 			else {
 				p->bal = 0;
 				p->esq->bal = 1;
@@ -410,7 +414,7 @@ ApAVL balanceiaAVL(ApAVL p){
 			p->bal = 0;
 			p = rotDir(p);
 			p->bal = 0;
-			p->dir->bal = 0;
+			p->esq->bal = 0;
 			return p;
 		}
 		else { //Se p->dir>bal == 1, ou seja, dir->esq
@@ -420,6 +424,10 @@ ApAVL balanceiaAVL(ApAVL p){
 				p->bal = 0;
 				p->esq->bal = 0;
 				p->dir->bal = -1;
+			}
+			else if (p->bal == 0) {
+				p->esq->bal = 0;
+				p->dir->bal = 0;
 			}
 			else {
 				p->bal = 0;
