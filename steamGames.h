@@ -49,4 +49,4 @@ Ap234	split234		(Ap234, Ap234);
 Ap234	criaNodo234		(char *, int linha);
 Ap234	insere234		(Ap234, char *, int);
 void	imprime234		(Ap234);
-void	busca234		(Ap234, char *, void (*f)(int));
+void	busca234		(Ap234, char *, void (*f)(int, int));

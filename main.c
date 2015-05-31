@@ -1,9 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "steamGames.h"
 #include <unistd.h>
+#include "steamGames.h"
 
-void imprimeLinha(int linha);
+// Tipo impressão sinaliza se deve imprimir como AVL ( = 0) ou 234 ( = 1)
+void imprimeLinha(int linha, int tipoImpressao);
+
 char *registros;
 char *buscas;
 
@@ -27,11 +29,8 @@ int main (int argc, char **argv) {
     while(codigo != 0){
         ++linha;
         int mudaA = (0==1);
-        printf("%d\t", codigo);
         raizAVL = insereAVL(raizAVL, codigo, &mudaA, linha);
-        imprimeAVL(raizAVL);
-        puts("");
-        fscanf(dados, "%s", &jogo);
+        fscanf(dados, " %s", &jogo);
         raiz234 = insere234(raiz234, &jogo, linha);
         //char descricao;
         fscanf(dados, "%[^\t\n]", &jogo);
@@ -40,7 +39,7 @@ int main (int argc, char **argv) {
     fclose(dados);
     
     
-    puts("\nCodigo:");
+    puts("Codigo:");
     imprimeAVL(raizAVL);
     puts("\nNome:");
     imprime234(raiz234);
@@ -51,19 +50,19 @@ int main (int argc, char **argv) {
         exit(-1);
     }
     char tipo;
-    fscanf(arqBuscas, "%c", &tipo);
+    fscanf(arqBuscas, " %c", &tipo);
     while(tipo != 'f'){
         if(tipo == 'c'){
-            fscanf(arqBuscas,"%d", &codigo);
+            fscanf(arqBuscas," %d", &codigo);
             ApAVL no = buscaAVL(raizAVL, codigo);
             if(no != NULL){
-                imprimeLinha(no->linhaRegistroAVL);
+                imprimeLinha(no->linhaRegistroAVL, 0);
             }
         }else if(tipo == 'n'){
-            fscanf(arqBuscas,"%s", &jogo);
+            fscanf(arqBuscas," %s", &jogo);
             busca234(raiz234, &jogo, imprimeLinha);
         }
-        fscanf(arqBuscas, "%c", &tipo);
+        fscanf(arqBuscas, " %c", &tipo);
     }
     
     fclose(arqBuscas);
@@ -72,17 +71,29 @@ int main (int argc, char **argv) {
     exit(0);
 }
 
-void imprimeLinha(int n){
+void imprimeLinha(int n, int tipoImpressao){
     FILE *arq = fopen(registros, "r");
     if(arq == NULL){
         return;
     }
     int cont = 0;
     --n;
-    char linha[256];
+    char linha[1024];
     while (fgets(linha, sizeof linha, arq) != NULL && cont < n){
         cont++;
     }
-    printf("%s", linha);
+    // Tipo impressao != 0 imprime como 234
+    if(tipoImpressao){
+        int codigo, id;
+        char descricao, aux;
+        sscanf(linha, "%d", &codigo);
+        id = codigo;
+        sscanf(linha, "%*d %[^\t\n]", linha);
+        linha[strlen(linha)] = '\n';
+        sscanf(linha, "%*s %[^\n\t]", &descricao);
+        printf("%d %s\n", id, &descricao);
+    }else{
+        printf("%s", linha);
+    }
     fclose(arq);
 }

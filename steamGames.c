@@ -149,7 +149,6 @@ Ap234 split (Ap234 p, Ap234 pai_p){
 Ap234 inserer234 (Ap234 p, Ap234 pai_p, char *c , int linha){ // abordagem otimista (tudo vai dar certo eee \o/ slip só quando não dá maiss
 	int string_eh_maior;
 	int i,j,k,l,aux,eh_folha = 0;
-    Ap234 a_inserir;
 
 	if (p == NULL){ // se for um nodo nulo, cria um novo nodo e dá o novo nodo pro p
 		p = (criaNodo234(c, linha));
@@ -338,14 +337,16 @@ Ap234 insere234 (Ap234 raiz, char *c , int linha){ // abordagem pessimista
     return(raiz);
 }
 
-void busca234 (Ap234 p, char *c, void (*f)(int)){
+void busca234 (Ap234 p, char *c, void (*f)(int, int)){
     if(p == NULL) return;
     int i = 0;
     while(i < p->qtdNome && strcasecmp(p->nome[i], c) < 0) ++i;
     if(i < p->qtdNome && strcasecmp(p->nome[i], c) == 0){
-        (*f)(p->linhaRegistro234[i]);
+        printf("%s ", p->nome[i]);
+        (*f)(p->linhaRegistro234[i], 1);
         busca234(p->Ap[i+1], c, (*f));
     }
+    busca234(p->Ap[i-1], c, (*f));
     busca234(p->Ap[i], c, (*f));
 }
 
@@ -487,7 +488,7 @@ ApAVL buscaAVL(ApAVL p, int k){
 void imprimeAVL(ApAVL p){
 	//Tipo pré-ordem
 	if (p != NULL) {
-		printf(" (%d - %d",p->codigo, p->bal);
+		printf(" (%d",p->codigo);
 		imprimeAVL(p->esq);
 		imprimeAVL(p->dir);
 		printf(")");
