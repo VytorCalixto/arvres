@@ -26,14 +26,15 @@ int main (int argc, char **argv) {
     fscanf(dados, "%d", &codigo);
     while(codigo != 0){
         ++linha;
-        //printf("%d: %d - ", linha, codigo);
         int mudaA = (0==1);
+        printf("%d\t", codigo);
         raizAVL = insereAVL(raizAVL, codigo, &mudaA, linha);
+        imprimeAVL(raizAVL);
+        puts("");
         fscanf(dados, "%s", &jogo);
         raiz234 = insere234(raiz234, &jogo, linha);
-        //printf("%s\n", &jogo);
-        char descricao;
-        fscanf(dados, "%[^\t\n]", &descricao);
+        //char descricao;
+        fscanf(dados, "%[^\t\n]", &jogo);
         fscanf(dados, "%d", &codigo);
     }
     fclose(dados);

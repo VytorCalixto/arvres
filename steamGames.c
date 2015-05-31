@@ -475,7 +475,7 @@ ApAVL buscaAVL(ApAVL p, int k){
 void imprimeAVL(ApAVL p){
 	//Tipo pré-ordem
 	if (p != NULL) {
-		printf(" (%d",p->codigo);
+		printf(" (%d - %d",p->codigo, p->bal);
 		imprimeAVL(p->esq);
 		imprimeAVL(p->dir);
 		printf(")");
