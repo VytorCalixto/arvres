@@ -85,7 +85,7 @@ void imprimeLinha(int n, int tipoImpressao){
     // Tipo impressao != 0 imprime como 234
     if(tipoImpressao){
         int codigo, id;
-        char descricao, aux;
+        char descricao;
         sscanf(linha, "%d", &codigo);
         id = codigo;
         sscanf(linha, "%*d %[^\t\n]", linha);

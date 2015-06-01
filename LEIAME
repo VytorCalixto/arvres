@@ -3,13 +3,18 @@
 /*                                                                            */
 /* Algoritmos e Estruturas de dados III                                       */
 /* Professor* ****** - Primeiro Semestre de 2015                              */
-/* Trabalho de Implementacao (Arvore AVL e 2-3-4)   		                      */
+/* Trabalho de Implementacao (Arvore AVL e 2-3-4)   		                  */
 /*                                                                            */
-/* Aluna: Luiza Maria Wille Culau           								                  */
-/* GRR: 20141014                                      		             	      */
-/* Aluno: Victor Luís Perszel               								                  */
-/* GRR: 20144615                                      		             	      */
-/* Aluno: Vytor dos Santos Bezerra Calixto  								                  */
-/* GRR: 20144434                                      		             	      */
+/* Aluna: Luiza Maria Wille Culau           							      */
+/* GRR: 20141014                                      		             	  */
+/* Aluno: Victor Luís Perszel               								  */
+/* GRR: 20144615                                      		             	  */
+/* Aluno: Vytor dos Santos Bezerra Calixto  								  */
+/* GRR: 20144434                                      		             	  */
 /*                                                                            */
 /*----------------------------------------------------------------------------*/
+
+Restrições conhecidas:
+    A função imprimeLinha usa um buffer para ler as linhas do arquivo. Por isso,
+linhas com mais de 1024 caracteres podem fazer com que a saída esteja "errada".
+Basta aumentar o tamanho do vetor linha para um valor adequado.
